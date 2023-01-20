@@ -15,21 +15,19 @@ class ViewController: UIViewController {
     @IBOutlet weak var timeLeft: UILabel!
     let eggTimes = ["Soft": 3,"Medium": 5,"Hard": 7]
     var player : AVAudioPlayer!
-    var totalTime = 0
     var timer = Timer()
     
     @IBAction func onPressed(_ sender: UIButton) {
         var secondsPassed = 0
         timer.invalidate()
-        let hardness = sender.currentTitle!
-        totalTime =  eggTimes[hardness]!
+        guard let hardness = sender.currentTitle, let totalTime = eggTimes[hardness] else { return }
         titleLavel.text = hardness
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { (Timer) in
-            if secondsPassed < self.totalTime {
+            if secondsPassed < totalTime {
                     secondsPassed += 1
-                let percentageProgress = Float(secondsPassed) / Float(self.totalTime)
+                let percentageProgress = Float(secondsPassed) / Float(totalTime)
                 self.progressBar.progress = percentageProgress
-                self.timeLeft.text = String(self.totalTime - secondsPassed)
+                self.timeLeft.text = String(totalTime - secondsPassed)
                 } else {
                     Timer.invalidate()
                     self.titleLavel.text = "Done!"
