@@ -22,14 +22,14 @@ class ViewController: UIViewController {
         timer.invalidate()
         guard let hardness = sender.currentTitle, let totalTime = eggTimes[hardness] else { return }
         titleLavel.text = hardness
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { (Timer) in
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { (timer) in
             if secondsPassed < totalTime {
                     secondsPassed += 1
                 let percentageProgress = Float(secondsPassed) / Float(totalTime)
                 self.progressBar.progress = percentageProgress
                 self.timeLeft.text = String(totalTime - secondsPassed)
                 } else {
-                    Timer.invalidate()
+                    timer.invalidate()
                     self.titleLavel.text = "Done!"
                     self.playSound()
                 }
